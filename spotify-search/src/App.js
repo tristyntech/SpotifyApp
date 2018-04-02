@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import './app.css'
+import './app.css';
 
 // Custom Component Imports
-import AppBar from './Components/AppBar.js'
-import Table from './Components/Table.js'
+import AppBar from './Components/AppBar.js';
+import Table from './Components/Table.js';
+
+import AuthToken from './AuthToken.js'
 
 class App extends Component {
   constructor(){
@@ -11,7 +13,6 @@ class App extends Component {
     this.state = {
       filteredResults: [],
       searchQuery:'',
-      height: 100,
       isAlphabeticalFilter: true
     }
 
@@ -73,7 +74,7 @@ class App extends Component {
       if (this.state.searchQuery.length) {
         const config = {
           headers: {
-            "Authorization": "Bearer BQCEYTm6R6AQj2iOpST6xRpiND1XCL5ii5XonHP0ZH0z30TaH7GHfscgmaUcZUUVoZOB7mKUHjea57gyNgyRE2CzbhX4rB6CGVgKmIrdxhDxwyVoCCCq7kVdmXk4CTzHfGLk7GUEzXSxqruREwHyWnLnbfkW-Cw"
+            "Authorization": ("Bearer " + AuthToken)
           }
         }
         fetch('https://api.spotify.com/v1/search?q='+this.state.searchQuery+'&type=artist,track,album&limit=30', config)
@@ -87,15 +88,15 @@ class App extends Component {
     }
 
     this.updateQuery = (e) => {
-      e.preventDefault();
-      let searchQuery = e.target.value;
+      let searchQuery = e.target.value === ' ' ? '+' : e.target.value;
       this.setState({ searchQuery })
     }
   }
+
   render() {
     return (
       <div id="container">
-        <div style={{boxShadow: "5px 8px #888888", borderRadius: 8, backgroundColor: '#424242', width: "80%", marginLeft: '10%', padding: 50, marginTop: "5%", marginBottom: '10%'}}>
+        <div id="app-container">
           <AppBar
             onClick={this.runSearch.bind(this)}
             onChange={this.updateQuery.bind(this)}

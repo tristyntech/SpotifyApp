@@ -16,4 +16,96 @@
   margin-left: 10%;
 }
 
+#app-container {
+  box-shadow: 5px 8px #888888;
+  border-radius: 4px;
+  background-color: #424242;
+  width: 80%;
+  margin-left: 10%;
+  padding: 50px;
+  margin-top: 5%;
+  margin-bottom: 10%;
+}
+
 /* TABLE STYLES */
+
+th {
+  width: 33%
+}
+
+#results-table-container {
+   margin-top: 50px;
+   background-color: white;
+}
+
+#album-art {
+  width: 50%;
+  height: 50%;
+}
+
+#album-title {
+  text-align: left;
+}
+
+/* APP BAR STYLES */
+
+#app-title {
+  font-family: "Simonetta";
+  color: white;
+}
+
+#search-container {
+  padding: 5px;
+  height: 25px;
+  width: auto;
+}
+
+#search-input {
+  margin-bottom: 5px;
+  font-family: "Ubuntu Mono";
+  padding-left: 5px;
+  color: grey;
+  font-size: 1.1em;
+  height: 35px;
+  border: 1.5px solid white;
+  border-radius: 3px 0px 0px 3px;
+  float: left;
+  width: 50%;
+}
+
+#search-button {
+  margin-bottom: 5px;
+  color: white;
+  float: left;
+  height: 35px;
+  border: 0px;
+  border-left: 1px solid #888;
+  border-radius: 0px 3px 3px 0px;
+  background-color: #c6c6c6;
+  margin-left: 0px;
+  width: auto;
+}
+
+
+/* MOBILE QUERIES  */
+
+@media only screen and (max-width:700px) {
+  .test {
+    display: none;
+    width: 50%;
+  }
+  .preview {
+    position: absolute;
+    text-align: right;
+    margin-left: -100px;
+  }
+  #app-container {
+    padding: 5px;
+  }
+}
+
+@media only screen and (max-width:650px) {
+  .preview {
+    display: none;
+  }
+}

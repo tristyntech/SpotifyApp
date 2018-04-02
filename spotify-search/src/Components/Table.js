@@ -1,44 +1,46 @@
 import React from "react";
+import '../app.css';
+
+// Custom Component Imports
+import TableRow from './TableRow.js';
+import TableHeader from './TableHeader.js';
 
 const ResultsTable = (props) => {
   return (
-    <div style={{marginTop: 50, backgroundColor: 'white'}}>
-      <table class="table">
-    <thead class="thead-light">
-      <tr>
-        <th onClick={()=>{ props.onClickTrack(props.items) }} scope="col">Song</th>
-        <th onClick={()=>{ props.onClickArtist(props.items) }} scope="col">Artist</th>
-        <th onClick={()=>{ props.onClickAlbum(props.items) }} scope="col">Album</th>
-        <th scope="col">Preview</th>
-      </tr>
-    </thead>
-    <tbody>
-
+    <div id="results-table-container">
+      <table className="table">
+        <TableHeader
+          onClickTrack={props.onClickTrack}
+          onClickArtist={props.onClickArtist}
+          onClickAlbum={props.onClickAlbum}
+          items={props.items}
+        />
         {
-          props.items.length ?
-          props.items.map((ele) => {
+          props.items.length > 0 &&
+          props.items.map((ele, i) => {
             return (
-              <tr>
-                <td>{ele.name}</td>
-                <td>{ele.artists[0].name}</td>
-                <td>
-                  <div>
-                    <img style={{width: '50%', height: "50%"}} src={ele.album.images[1].url} />
-                    <p style={{textAlign: 'left'}}>{ele.album.name}</p>
-                  </div>
-                </td>
-                <a target="_blank" href={ele.preview_url}><td>Link</td></a>
-              </tr>
+              <tbody key={i}>
+                <TableRow
+                  name={ele.name}
+                  preview_url={ele.preview_url}
+                  album={ele.album.name}
+                  albumImage={ele.album.images[1].url}
+                  artist={ele.artists[0].name}
+                />
+            </tbody>
             )
           })
-          :
-          <div class="alert alert-light" role="alert">
-            Use the search bar to search for a song, artist or album!
-          </div>
         }
-    </tbody>
-  </table>
-
+      </table>
+      {
+        props.items.length === 0 &&
+        <div
+          className="alert alert-light"
+          role="alert"
+        >
+          Use the search bar to search by song, artiest or album!
+        </div>
+      }
     </div>
   )
 }

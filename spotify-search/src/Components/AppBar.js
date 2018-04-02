@@ -1,13 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
+import '../app.css';
 
 const AppBar = (props) => {
   return (
     <div>
-      <h1 style={{fontFamily: "Simonetta", color: 'white'}}>SongFarm</h1>
-
-        <div style={{padding: 5, height: 25}}>
-          <input onChange={props.onChange} style={{fontFamily: "Ubuntu Mono", paddingLeft: 5, color: 'grey', fontSize: "1.1em", height: 35, border: '1.5px solid white', borderRadius: "3px 0px 0px 3px", float: 'left'}} />
-          <button onClick={props.onClick} style={{color: 'white', float: 'left', height: 35, border: 0, borderLeft: "1px solid #888", borderRadius: "0px 3px 3px 0px", backgroundColor: '#c6c6c6', marginLeft: 0}}>Search</button>
+      <img
+        alt="logo"
+        src="https://davedomina.com/wp-content/uploads/2014/06/icon-farm.png"
+      />
+      <h1
+        id="app-title"
+      >SongFarm
+      </h1>
+        <div
+          id="search-container"
+        >
+          <input
+            onChange={props.onChange}
+            id="search-input"
+            type="text"
+          />
+          <button
+            id="search-button"
+            type="submit"
+            onClick={props.onClick}
+          >
+            Search
+          </button>
       </div>
     </div>
   )
