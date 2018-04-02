@@ -16,16 +16,16 @@ class App extends Component {
       isAlphabeticalFilter: true
     }
 
-    this.filterByTrack = (array) => {
+    this.filterByTrack = (musicList) => {
       let filteredResults;
       if (this.state.isAlphabeticalFilter) {
-        filteredResults = array.sort(function(a, b) {
+        filteredResults = musicList.sort(function(a, b) {
           let textA = a.name.toUpperCase();
           let textB = b.name.toUpperCase();
           return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
         });
       } else {
-        filteredResults = array.sort(function(a, b) {
+        filteredResults = musicList.sort(function(a, b) {
             let textA = a.name.toUpperCase();
             let textB = b.name.toUpperCase();
             return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
@@ -34,16 +34,16 @@ class App extends Component {
       this.setState({ filteredResults, isAlphabeticalFilter: !this.state.isAlphabeticalFilter })
     }
 
-    this.filterByArtist = (array) => {
+    this.filterByArtist = (musicList) => {
       let filteredResults;
       if (this.state.isAlphabeticalFilter) {
-        filteredResults = array.sort(function(a, b) {
+        filteredResults = musicList.sort(function(a, b) {
           let textA = a.artists[0].name.toUpperCase();
           let textB = b.artists[0].name.toUpperCase();
           return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
         });
       } else {
-        filteredResults = array.sort(function(a, b) {
+        filteredResults = musicList.sort(function(a, b) {
           let textA = a.artists[0].name.toUpperCase();
           let textB = b.artists[0].name.toUpperCase();
           return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
@@ -52,16 +52,16 @@ class App extends Component {
       this.setState({ filteredResults, isAlphabeticalFilter: !this.state.isAlphabeticalFilter })
     }
 
-    this.filterByAlbum = (array) => {
+    this.filterByAlbum = (musicList) => {
       let filteredResults;
       if (this.state.isAlphabeticalFilter) {
-        filteredResults = array.sort(function(a, b) {
+        filteredResults = musicList.sort(function(a, b) {
             let textA = a.album.name.toUpperCase();
             let textB = b.album.name.toUpperCase();
             return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
         });
       } else {
-        filteredResults = array.sort(function(a, b) {
+        filteredResults = musicList.sort(function(a, b) {
           let textA = a.album.name.toUpperCase();
           let textB = b.album.name.toUpperCase();
           return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
