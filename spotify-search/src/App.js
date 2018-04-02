@@ -3,63 +3,86 @@ import './app.css'
 
 // Custom Component Imports
 import AppBar from './Components/AppBar.js'
-import TrackTable from './Components/TrackTable.js'
+import Table from './Components/Table.js'
 
 class App extends Component {
   constructor(){
     super();
     this.state = {
-      results: {},
       filteredResults: [],
       searchQuery:'',
-      height: 100
+      height: 100,
+      isAlphabeticalFilter: true
     }
 
     this.filterByTrack = (array) => {
-      let filteredResults = array.sort(function(a, b) {
+      let filteredResults;
+      if (this.state.isAlphabeticalFilter) {
+        filteredResults = array.sort(function(a, b) {
           let textA = a.name.toUpperCase();
           let textB = b.name.toUpperCase();
           return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-      });
-      this.setState({ filteredResults })
+        });
+      } else {
+        filteredResults = array.sort(function(a, b) {
+            let textA = a.name.toUpperCase();
+            let textB = b.name.toUpperCase();
+            return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+        });
+      }
+      this.setState({ filteredResults, isAlphabeticalFilter: !this.state.isAlphabeticalFilter })
     }
 
     this.filterByArtist = (array) => {
-      let filteredResults = array.sort(function(a, b) {
-        let textA = a.artists[0].name.toUpperCase();
-        let textB = b.artists[0].name.toUpperCase();
-        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-      });
-      this.setState({ filteredResults })
+      let filteredResults;
+      if (this.state.isAlphabeticalFilter) {
+        filteredResults = array.sort(function(a, b) {
+          let textA = a.artists[0].name.toUpperCase();
+          let textB = b.artists[0].name.toUpperCase();
+          return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        });
+      } else {
+        filteredResults = array.sort(function(a, b) {
+          let textA = a.artists[0].name.toUpperCase();
+          let textB = b.artists[0].name.toUpperCase();
+          return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+        });
+      }
+      this.setState({ filteredResults, isAlphabeticalFilter: !this.state.isAlphabeticalFilter })
     }
 
     this.filterByAlbum = (array) => {
-      let filteredResults = array.sort(function(a, b) {
+      let filteredResults;
+      if (this.state.isAlphabeticalFilter) {
+        filteredResults = array.sort(function(a, b) {
+            let textA = a.album.name.toUpperCase();
+            let textB = b.album.name.toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        });
+      } else {
+        filteredResults = array.sort(function(a, b) {
           let textA = a.album.name.toUpperCase();
           let textB = b.album.name.toUpperCase();
-          return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-      });
-      this.setState({ filteredResults })
+          return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+        });
+      }
+      this.setState({ filteredResults, isAlphabeticalFilter: !this.state.isAlphabeticalFilter })
     }
 
     this.runSearch = () => {
       if (this.state.searchQuery.length) {
-        console.log('running')
         const config = {
           headers: {
-            "Authorization": "Bearer BQBEWS5qJ1Hw2sRWJ2chKfLtHVuAWwQ0T37Hyod2KpOpadBa84agzt_Z3ZjpCLxtUJhvkxUy8JujBkwpoZaOKnZJBBo0wB5mBHzLl9R1l6YXM3TvPQnXR_ejHNpcMyvqxupAAB2kF9353GQ6KCWPkCxHi7Iocd0"
+            "Authorization": "Bearer BQCEYTm6R6AQj2iOpST6xRpiND1XCL5ii5XonHP0ZH0z30TaH7GHfscgmaUcZUUVoZOB7mKUHjea57gyNgyRE2CzbhX4rB6CGVgKmIrdxhDxwyVoCCCq7kVdmXk4CTzHfGLk7GUEzXSxqruREwHyWnLnbfkW-Cw"
           }
         }
-        fetch('https://api.spotify.com/v1/search?q='+this.state.searchQuery+'&type=artist,track,album&limit=50', config)
+        fetch('https://api.spotify.com/v1/search?q='+this.state.searchQuery+'&type=artist,track,album&limit=30', config)
         .then((results)=>{
           return results.json();
         })
         .then((results) => {
-          this.setState({ results: results })
           this.setState({ filteredResults: results.tracks.items })
         })
-        console.log('completed')
-        console.log(this.state)
       }
     }
 
@@ -68,13 +91,7 @@ class App extends Component {
       let searchQuery = e.target.value;
       this.setState({ searchQuery })
     }
-
   }
-
-componentWillMount() {
-  setTimeout(this.loadPage, 1000)
-}
-
   render() {
     return (
       <div id="container">
@@ -83,7 +100,7 @@ componentWillMount() {
             onClick={this.runSearch.bind(this)}
             onChange={this.updateQuery.bind(this)}
           />
-          <TrackTable
+          <Table
             onClickTrack = {this.filterByTrack.bind(this)}
             onClickArtist = {this.filterByArtist}
             onClickAlbum = {this.filterByAlbum}
